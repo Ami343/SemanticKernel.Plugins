@@ -1,6 +1,6 @@
 namespace Common.Configuration;
 
-public class AzureOpenAiSettings
+public class AzureOpenAiSettings : IAppConfiguration
 {
     public static string SectionName = "AzureOpenAiService";
 
