@@ -5,10 +5,10 @@ namespace Common.Helpers;
 
 public static class ConfigurationHelper
 {
-    public TConig GetConfiguration<TConig>() where TConig : IAppConfiguration
+    public static TConig GetConfiguration<TConig>() where TConig : IAppConfiguration
     {
         var appConfiguration = GetConfigurationBuilder();
-
+        
         var config = Activator.CreateInstance<TConig>(); 
         appConfiguration.Bind(config.SectionName, config);
 
