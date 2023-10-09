@@ -1,24 +1,33 @@
 ﻿using Common.Configuration;
 using Common.Helpers;
-using Microsoft.SemanticKernel;
+using Microsoft.SemanticKernel.Planning;
 using WeatherPlugin.Plugins.Weather;
 
 Console.WriteLine("Weather plugin");
 
 // Get configuration
 var weatherApiConfig = ConfigurationHelper.GetConfiguration<WeatherApiSettings>();
+var azureOpenAiConfig = ConfigurationHelper.GetConfiguration<AzureOpenAiSettings>();
 
-// Initialize kernel instance 
-var kernel = new KernelBuilder().Build();
+// Initialize kernel instance
+var kernel = KernelBuilderHelper.CreateKernel(
+    azureOpenAiConfig.DeploymentName,
+    azureOpenAiConfig.Endpoint,
+    azureOpenAiConfig.ApiKey);
 
-var weatherPlugin = kernel.ImportSkill(
+// Import plugin
+kernel.ImportSkill(
     new SkWeatherPlugin(weatherApiConfig.ApiKey),
     nameof(SkWeatherPlugin));
 
-Console.WriteLine("Please type the city for which you would like to check weather:");
+// Create planner 
+var planner = new SequentialPlanner(kernel);
 
+Console.WriteLine("Please type to which city you would like to travel:");
 var input = Console.ReadLine();
 
-var result = await weatherPlugin["GetWeather"].InvokeAsync(input);
+var plan =  await planner.CreatePlanAsync(input!);
+
+var result = await plan.InvokeAsync(kernel.CreateNewContext());
 
 Console.WriteLine(result);
