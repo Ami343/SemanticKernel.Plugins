@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "description": "Propose role for the person based on provided description",
+  "type": "completion",
+  "completion": {
+    "max_tokens": 100
+  },
+  "input": {
+    "parameters": [
+      {
+        "name": "input",
+        "description": "Input provided by user",
+        "defaultValue": ""
+      }
+    ]
+  }
+}

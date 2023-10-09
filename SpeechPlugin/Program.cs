@@ -16,10 +16,7 @@ speechToText.SpeechConfig.SetProperty(PropertyId.Speech_SegmentationSilenceTimeo
 speechToText.Build();
 
 // Initialize kernel instance 
-var kernel = KernelBuilderHelper.CreateKernel(
-    azureOpenAiConfiguration.DeploymentName,
-    azureOpenAiConfiguration.Endpoint,
-    azureOpenAiConfiguration.ApiKey);
+var kernel = KernelBuilderHelper.CreateKernel(azureOpenAiConfiguration);
 
 var speechToTextDic = kernel.ImportSkill(
     new AzureAI.Community.Microsoft.Semantic.Kernel.Speech.Plugin.SpeechPlugin(speechToText),

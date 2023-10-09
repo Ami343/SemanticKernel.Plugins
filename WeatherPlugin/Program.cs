@@ -10,10 +10,7 @@ var weatherApiConfig = ConfigurationHelper.GetConfiguration<WeatherApiSettings>(
 var azureOpenAiConfig = ConfigurationHelper.GetConfiguration<AzureOpenAiSettings>();
 
 // Initialize kernel instance
-var kernel = KernelBuilderHelper.CreateKernel(
-    azureOpenAiConfig.DeploymentName,
-    azureOpenAiConfig.Endpoint,
-    azureOpenAiConfig.ApiKey);
+var kernel = KernelBuilderHelper.CreateKernel(azureOpenAiConfig);
 
 // Import plugin
 kernel.ImportSkill(
