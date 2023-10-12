@@ -1,7 +1,7 @@
 ﻿using Common.Configuration;
 using Common.Helpers;
 using Microsoft.SemanticKernel.Planning;
-using WeatherPlugin.Plugins.Weather;
+using WeatherPlugin.Extensions;
 
 Console.WriteLine("Weather plugin");
 
@@ -13,9 +13,7 @@ var azureOpenAiConfig = ConfigurationHelper.GetConfiguration<AzureOpenAiSettings
 var kernel = KernelBuilderHelper.CreateKernel(azureOpenAiConfig);
 
 // Import plugin
-kernel.ImportSkill(
-    new SkWeatherPlugin(weatherApiConfig.ApiKey),
-    nameof(SkWeatherPlugin));
+kernel.ImportWeatherPlugin(weatherApiConfig.ApiKey);
 
 // Create planner 
 var planner = new SequentialPlanner(kernel);
