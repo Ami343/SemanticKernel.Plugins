@@ -1,6 +1,7 @@
 ﻿using ChainedFunctions.Extensions;
 using Common.Configuration;
 using Common.Helpers;
+using Common.Hooks;
 using Microsoft.Extensions.Logging;
 using Microsoft.SemanticKernel.Orchestration;
 using SemanticFunctions.Extensions;
@@ -28,6 +29,9 @@ var extractJsonInfoSkill = kernel.ImportExtractJsonPlugin();
 var context = new ContextVariables();
 
 context.Set("input", "I'm planning to visit Catania in the end of current month.");
+
+kernel.FunctionInvoking += KernelPreFunctionHook.Handle;
+kernel.FunctionInvoked += KernelPostFunctionHook.Handle;
 
 var result = await kernel.RunAsync(
     context,
