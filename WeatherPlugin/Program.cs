@@ -1,6 +1,6 @@
 ﻿using Common.Configuration;
 using Common.Helpers;
-using Microsoft.SemanticKernel.Planning;
+using Microsoft.SemanticKernel.Planners;
 using WeatherPlugin.Extensions;
 
 Console.WriteLine("Weather plugin");
@@ -25,4 +25,4 @@ var plan =  await planner.CreatePlanAsync(input!);
 
 var result = await plan.InvokeAsync(kernel.CreateNewContext());
 
-Console.WriteLine(result);
+Console.WriteLine(result.GetValue<string>());

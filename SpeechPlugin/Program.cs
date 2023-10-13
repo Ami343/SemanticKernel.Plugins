@@ -1,4 +1,5 @@
 ﻿using AzureAI.Community.Microsoft.Semantic.Kernel.Speech;
+using AzureAI.Community.Microsoft.Semantic.Kernel.Speech.Plugin;
 using Common.Configuration;
 using Common.Helpers;
 using Microsoft.CognitiveServices.Speech;
@@ -18,15 +19,15 @@ speechToText.Build();
 // Initialize kernel instance 
 var kernel = KernelBuilderHelper.CreateKernel(azureOpenAiConfiguration);
 
-var speechToTextDic = kernel.ImportSkill(
-    new AzureAI.Community.Microsoft.Semantic.Kernel.Speech.Plugin.SpeechPlugin(speechToText),
-    nameof(AzureAI.Community.Microsoft.Semantic.Kernel.Speech.Plugin.SpeechPlugin));
+var speechToTextDic = kernel.ImportFunctions(
+    new SpeechPlugin(speechToText),
+    nameof(SpeechPlugin));
 
 var skFunction = kernel.CreateSemanticFunction("Process the input {{$input}}");
 
 var result = await kernel.RunAsync(speechToTextDic["ListenSpeechVoice"], skFunction);
 
-Console.WriteLine(result);
+Console.WriteLine(result.GetValue<string>());
 
 Console.WriteLine("Process finished");
 

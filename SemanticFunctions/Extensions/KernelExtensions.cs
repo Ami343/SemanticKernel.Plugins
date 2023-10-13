@@ -1,14 +1,13 @@
 using Microsoft.SemanticKernel;
-using Microsoft.SemanticKernel.SkillDefinition;
 
 namespace SemanticFunctions.Extensions;
 
 public static class KernelExtensions
 {
-    public static IDictionary<string, ISKFunction> ImportHRAssistantSkill(this IKernel kernel)
+    public static IDictionary<string, ISKFunction> ImportHrAssistantSkill(this IKernel kernel)
     {
         var skillsDir = Path.Combine(Directory.GetCurrentDirectory(), "Skills");
-        var skill = kernel.ImportSemanticSkillFromDirectory(skillsDir, "HRAssistantSkill");
+        var skill = kernel.ImportSemanticFunctionsFromDirectory(skillsDir, "HRAssistantSkill");
 
         return skill;
     }
@@ -16,7 +15,7 @@ public static class KernelExtensions
     public static IDictionary<string, ISKFunction> ImportCitySkill(this IKernel kernel)
     {
         var skillsDir = Path.Combine(Directory.GetCurrentDirectory(), "Skills");
-        var skill = kernel.ImportSemanticSkillFromDirectory(skillsDir, "CitySkill");
+        var skill = kernel.ImportSemanticFunctionsFromDirectory(skillsDir, "CitySkill");
 
         return skill;
     }
